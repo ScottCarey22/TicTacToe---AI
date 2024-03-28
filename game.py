@@ -94,6 +94,9 @@ def play(game, x_player, o_player, print_game=True):
             if game.current_winner:
                 if print_game:
                     print(letter + ' has won!')
+                    play_again = input("Do you want to play again? (yes/no): ").lower()
+
+                    return play_again
                 return letter
  
         # switch players
@@ -104,13 +107,40 @@ def play(game, x_player, o_player, print_game=True):
         time.sleep(0.8)
 
     if print_game:
-        print('It/s a tie!')
+        print('It/s a tie!') if not game.current_winner else print(game.current_winner + ' has won!')
+    # prompt to restart the game after game is over
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+
+    return play_again
 
 if __name__ == '__main__':
-    x_player = HumanPlayer('X')
-    o_player = UnbeatablePlayer('O')
-    t = TicTacToe()
-    play(t, x_player, o_player, print_game=True)
+    # loop to retart game 
+    while True:
+        valid_choice = False
+        while not valid_choice:
+            # ask for opponent choice
+            opponent_choice = input("Choose your opponent (random, unbeatable, human):  ").lower()
+
+            if opponent_choice in ["random", "unbeatable", "human"]:
+                valid_choice = True
+            else:
+                # handling invalid opponent
+                print("Invalid opponent choice. Try again. (Options: random, unbeatable, human)")
+        x_player = HumanPlayer('X')
+
+        if opponent_choice == 'random':
+            o_player = RandomComputerPlayer('O')
+        elif opponent_choice == 'unbeatable':
+            o_player = UnbeatablePlayer('O')
+        else:
+            o_player = HumanPlayer('O')
+        t = TicTacToe()
+        play_again = play(t, x_player, o_player, print_game=True)
+        # restart prompt
+        if play_again != 'yes':
+            # if player doesn't want to play again
+            break
+        print("Thanks for playing!")
 
             
     
