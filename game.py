@@ -1,4 +1,4 @@
-from player import Player, RandomComputerPlayer, HumanPlayer
+from player import Player, RandomComputerPlayer, HumanPlayer, UnbeatablePlayer
 import time
 
 class TicTacToe:
@@ -103,13 +103,12 @@ def play(game, x_player, o_player, print_game=True):
         # time between turns
         time.sleep(0.8)
 
-
     if print_game:
         print('It/s a tie!')
 
 if __name__ == '__main__':
     x_player = HumanPlayer('X')
-    o_player = RandomComputerPlayer('O')
+    o_player = UnbeatablePlayer('O')
     t = TicTacToe()
     play(t, x_player, o_player, print_game=True)
 
